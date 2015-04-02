@@ -7,6 +7,22 @@
  */
 
 class FileEntry {
-    public $size, $type, $path, $versions;
+    public $size=0, $type, $path, $versions;
+    public $name;
+    function __construct($file_xml, $root_path){
+        $this->name = $file_xml->name;
+        $ext = pathinfo($this->name, PATHINFO_EXTENSION);
+        if($file_xml['kind']=='dir'){
+            $this->type = $file_xml['kind'];
+        }else{
+            $this->type=$ext;
+        }
+        if($file_xml->size){
+            $this->size=$file_xml->size;
+        }
+        $this->path = $root_path.'/'.$this->name;
+    }
 }
+
+
 ?>
