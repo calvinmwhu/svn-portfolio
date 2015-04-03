@@ -49,8 +49,8 @@
                 echo "<p class=\"lead\">On this page you can find my svn projects. Please click on any of them in left panel to see a list of files.</p>";
             } else {
                 $assignment = $parser->project_lists[$id];
-                $date = new DateTime($assignment->date);
-                $date = $date->format('Y-m-d H:i:s');
+                $date = $assignment->date;
+
                 $version = $assignment->version;
                 $summary = $assignment->summary;
                 echo "<div class=\"row\">";

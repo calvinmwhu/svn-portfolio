@@ -18,7 +18,9 @@ class ProjectEntry {
     function __construct($assignment_xml){
         $this->title=(string)$assignment_xml->name;
         $this->version = (string)$assignment_xml->commit['revision'];
-        $this->date = (string)$assignment_xml->commit->date;
+//        $this->date = (string)$assignment_xml->commit->date;
+        $temp_date = new DateTime((string)$assignment_xml->commit->date);
+        $this->date = $temp_date->format('Y-m-d H:i:s');
         $this->files=array();
     }
 
