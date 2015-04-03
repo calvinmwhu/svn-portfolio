@@ -66,7 +66,7 @@
                         <thead>
                         <tr>
                             <th>File/Directory</th>
-                            <th>Size</th>
+                            <th>Size(Bytes)</th>
                             <th>Type</th>
                         </tr>
                         </thead>
