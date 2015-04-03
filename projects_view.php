@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="www/inc/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<!--    <script src="www/inc/js/script.js"></script>-->
+    <!--    <script src="www/inc/js/script.js"></script>-->
 </head>
 
 
@@ -72,15 +72,18 @@
                         </thead>
                         <tbody>
                         <?php
-                        foreach ($assignment->files as $key=>$file) {
-                            $short_name=end(explode('/',$file->name));
+                        $key_numeric = 0;
+                        foreach ($assignment->files as $key => $file) {
+                            $short_name = end(explode('/', $file->name));
                             $json_versions = json_encode($file->versions);
                             echo "<tr>";
-                            echo "<p class='invisible' id=$key>$json_versions</p>";
-                            echo "<td><a href='#' class='clickable-link' data-key=$key data-shortname=$short_name data-linkToCode=$file->path data-toggle='modal' data-target='#myModal'>$file->name</a></td>";
+                            echo "<p class='invisible' id=$key_numeric>$json_versions</p>";
+                            echo "<td><a href='#' class='clickable-link' data-key=$key_numeric data-shortname=$short_name data-linkToCode=$file->path data-toggle='modal' data-target='#myModal'>$file->name</a></td>";
+//                            echo "<td><a href='#' class='clickable-link' data-key=$key_numeric data-shortname=$short_name data-linkToCode=$file->path>$file->name</a></td>";
                             echo "<td>$file->size</td>";
                             echo "<td>$file->type</td>";
                             echo "</tr>";
+                            $key_numeric++;
                         }
                         ?>
                         </tbody>
@@ -95,11 +98,33 @@
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                         aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                <h4 class="modal-title" id="myModalLabel"></h4>
                             </div>
                             <div class="modal-body">
-                                <h3 class="version">Versions</h3>
-                                <iframe id="iframe-to-code" src="" style="zoom:0.60" width="99.6%" height="500"></iframe>
+                                <iframe id="iframe-to-code" src="" style="zoom:0.60" width="99.6%"
+                                        height="500"></iframe>
+                            </div>
+                            <div id="version-area">
+                                <table class="table" id="table-of-pre-commits">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            <strong>Previous Commits:</strong>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <thead>
+                                    <tr>
+                                        <th>revision no.</th>
+                                        <th>author</th>
+                                        <th>message</th>
+                                        <th>date</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -76,3 +76,7 @@ code {
 .invisible{
     display: none;
 }
+
+.pre-commit-title{
+    margin-left: 10px;
+}

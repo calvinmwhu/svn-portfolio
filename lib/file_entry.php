@@ -15,7 +15,7 @@ class Version{
     function __construct($revision, $author, $msg, $date){
         $this->number=$revision;
         $this->author=$author;
-        $this->msg=$msg;
+        $this->info=$msg;
         $this->date=$date;
     }
 }
