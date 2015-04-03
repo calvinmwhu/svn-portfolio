@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="www/inc/css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<!--    <script src="www/inc/js/script.js"></script>-->
 </head>
 
 
@@ -37,54 +38,80 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <?php
-                $query_string = $_SERVER['QUERY_STRING'];
-                $id = '';
-                if ($query_string)
-                    $id = explode('=', $query_string)[1];
-                if (!$id) $id = "overview";
-                echo "<h1 class=\"page-header\">$id</h1>";
+            $query_string = $_SERVER['QUERY_STRING'];
+            $id = '';
+            if ($query_string)
+                $id = explode('=', $query_string)[1];
+            if (!$id) $id = "overview";
+            echo "<h1 class=\"page-header\">$id</h1>";
 
-                if ($id == 'overview') {
-                    echo "<p class=\"lead\">On this page you can find my svn projects. Please click on any of them in left panel to see a list of files.</p>";
-                } else {
-                    echo "<p class=\"lead\">sasasas</p>";
-                    $assignment = $parser->project_lists[$id];
-                    echo $assignment->date;
-                    echo $assignment->version;
-                    echo $assignment->summary;
+            if ($id == 'overview') {
+                echo "<p class=\"lead\">On this page you can find my svn projects. Please click on any of them in left panel to see a list of files.</p>";
+            } else {
+                $assignment = $parser->project_lists[$id];
+                $date = new DateTime($assignment->date);
+                $date = $date->format('Y-m-d H:i:s');
+                $version = $assignment->version;
+                $summary = $assignment->summary;
+                echo "<div class=\"row\">";
+                echo "<div class=\"col-sm-4\"><p class=\"lead\"><strong>Date of Last Commit:<br></strong>$date</p></div>";
+                echo "<div class=\"col-sm-4\"><p class=\"lead\"><strong>Version:<br></strong>$version</p></div>";
+                echo "<div class=\"col-sm-4\"><p class=\"lead\"><strong>Summary:<br></strong>$summary</p></div>";
+                echo "</div>";
+                ?>
 
-                }
+                <div class="container">
+                    <h3>List of files or subdirectories:</h3>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>File/Directory</th>
+                            <th>Size</th>
+                            <th>Type</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        foreach ($assignment->files as $key=>$file) {
+                            $short_name=end(explode('/',$file->name));
+                            $json_versions = json_encode($file->versions);
+                            echo "<tr>";
+                            echo "<p class='invisible' id=$key>$json_versions</p>";
+                            echo "<td><a href='#' class='clickable-link' data-key=$key data-shortname=$short_name data-linkToCode=$file->path data-toggle='modal' data-target='#myModal'>$file->name</a></td>";
+                            echo "<td>$file->size</td>";
+                            echo "<td>$file->type</td>";
+                            echo "</tr>";
+                        }
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
 
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                            </div>
+                            <div class="modal-body">
+                                <h3 class="version">Versions</h3>
+                                <iframe id="iframe-to-code" src="" style="zoom:0.60" width="99.6%" height="500"></iframe>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <?php
+            }
             ?>
 
-
-
-
-            <!--            <h1 class="page-header">--><?php //echo $_SERVER['REQUEST_URI']; ?><!--</h1>-->
-
-
-            <!--            <div class="row placeholders">-->
-            <!--                <div class="col-xs-6 col-sm-3 placeholder">-->
-            <!--                    <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="200x200" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzBEOEZEQiIvPjxnPjx0ZXh0IHg9Ijc0LjA0Njg3NSIgeT0iMTAwIiBzdHlsZT0iZmlsbDojRkZGRkZGO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MjAweDIwMDwvdGV4dD48L2c+PC9zdmc+" data-holder-rendered="true">-->
-            <!--                    <h4>Label</h4>-->
-            <!--                    <span class="text-muted">Something else</span>-->
-            <!--                </div>-->
-            <!--                <div class="col-xs-6 col-sm-3 placeholder">-->
-            <!--                    <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="200x200" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzM5REJBQyIvPjxnPjx0ZXh0IHg9Ijc0LjA0Njg3NSIgeT0iMTAwIiBzdHlsZT0iZmlsbDojMUUyOTJDO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MjAweDIwMDwvdGV4dD48L2c+PC9zdmc+" data-holder-rendered="true">-->
-            <!--                    <h4>Label</h4>-->
-            <!--                    <span class="text-muted">Something else</span>-->
-            <!--                </div>-->
-            <!--                <div class="col-xs-6 col-sm-3 placeholder">-->
-            <!--                    <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="200x200" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzBEOEZEQiIvPjxnPjx0ZXh0IHg9Ijc0LjA0Njg3NSIgeT0iMTAwIiBzdHlsZT0iZmlsbDojRkZGRkZGO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MjAweDIwMDwvdGV4dD48L2c+PC9zdmc+" data-holder-rendered="true">-->
-            <!--                    <h4>Label</h4>-->
-            <!--                    <span class="text-muted">Something else</span>-->
-            <!--                </div>-->
-            <!--                <div class="col-xs-6 col-sm-3 placeholder">-->
-            <!--                    <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="200x200" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzM5REJBQyIvPjxnPjx0ZXh0IHg9Ijc0LjA0Njg3NSIgeT0iMTAwIiBzdHlsZT0iZmlsbDojMUUyOTJDO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MjAweDIwMDwvdGV4dD48L2c+PC9zdmc+" data-holder-rendered="true">-->
-            <!--                    <h4>Label</h4>-->
-            <!--                    <span class="text-muted">Something else</span>-->
-            <!--                </div>-->
-            <!--            </div>-->
         </div>
     </div>
 </div>
@@ -94,3 +121,4 @@
 <?php include_once 'lib/footer.php'; ?>
 </body>
 
+<script type="text/javascript" src="www/inc/js/script.js"></script>

@@ -94,9 +94,8 @@ $parser = new Parser;
 //foreach ($parser->project_lists as $key => $project) {
 //    foreach ($project->files as $name => $file) {
 //        $versions=$file->versions;
-//        foreach($versions as $version){
-//            echo $version->number.$version->author.'<br>';
-//        }
+//        $json_str = json_encode($versions);
+//        echo $json_str.'<br>';
 //    }
 //}
 

@@ -32,8 +32,10 @@ class FileEntry {
         $ext = pathinfo($this->name, PATHINFO_EXTENSION);
         if($file_xml['kind']=='dir'){
             $this->type = (string)$file_xml['kind'];
-        }else{
+        }else if($ext){
             $this->type=$ext;
+        }else{
+            $this->type='unknown';
         }
         if($file_xml->size){
             $this->size=(string)$file_xml->size;
