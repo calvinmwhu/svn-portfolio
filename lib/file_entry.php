@@ -6,6 +6,24 @@
  * Time: 12:14 AM
  */
 
+/**
+ * Class Version -- Defines a version of a file
+ */
+class Version{
+    public $number, $author,  $info, $date;
+
+    function __construct($revision, $author, $msg, $date){
+        $this->number=$revision;
+        $this->author=$author;
+        $this->msg=$msg;
+        $this->date=$date;
+    }
+}
+
+/**
+ * Class FileEntry -- Defines a file or subdirectory under an assignment directory
+ * Contains an array of Versions: the previous versions of this file or subdirectory
+ */
 class FileEntry {
     public $size=0, $type, $path, $versions;
     public $name;
@@ -21,8 +39,23 @@ class FileEntry {
             $this->size=(string)$file_xml->size;
         }
         $this->path = $root_path.'/'.$this->name;
+        $this->versions=array();
+    }
+
+    /**
+     * @param $log_entries -- An array of LogEntry
+     * This function construct an array of all the previous versions for the file or subdirectory
+     */
+    public function find_all_revisions_for_files($log_entries){
+        foreach($log_entries as $rev_num=>$log_entry){
+            echo $this->name.'<br>';
+//            if(in_array($log_entry->files, $this->name)){
+//                echo "yes<br>";
+//                $version = new Version($rev_num, $log_entry->author, $log_entry->msg, $log_entry->date);
+//                array_push($this->versions, $version);
+//            }
+        }
     }
 }
 
 
-?>

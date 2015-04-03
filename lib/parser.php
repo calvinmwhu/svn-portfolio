@@ -59,6 +59,7 @@ class Parser
             if (!strstr((string)$entry_xml->name, '/')) {
                 //the file is a project folder
                 $curr_project = new ProjectEntry($entry_xml);
+                $curr_project->add_summary($this->log_entries);
                 $this->project_lists[$curr_project->title] = $curr_project;
             }
         }
@@ -73,6 +74,7 @@ class Parser
                 if (array_key_exists($belong_project, $this->project_lists)) {
 //                    echo "<h1>$belong_project</h1>";
                     $curr_file = new FileEntry($entry_xml, $this->root_path);
+//                    $curr_file->find_all_revisions_for_files($this->log_entries);
                     $this->project_lists[$belong_project]->add_file($curr_file);
                 }
             }
@@ -81,17 +83,20 @@ class Parser
 }
 
 $parser = new Parser;
-//echo count($parser->log_entries).'<br>';
+echo "end";
 //foreach($parser->log_entries as $key=>$value){
-//    echo $value->msg.'<br>';
+//    echo $key.'<br><br>';
+//    foreach($value->files as $file){
+//        echo $file.'<br>';
+//    }
 //}
 //
 //foreach ($parser->project_lists as $key => $value) {
-//    echo $key . ':<br>';
-//    foreach ($value->files as $file){
-//        echo "  ".$file->name.'<br>';
+//    foreach ($value->files as $name => $file) {
+//        echo count($file->versions) . ':' . $file->name . '<br>';
 //    }
 //}
 
 
-?>
+
+

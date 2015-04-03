@@ -6,4 +6,6 @@ echo $xml->to;
 echo $xml->from;
 echo $xml->heading;
 
+phpinfo();
+
 ?>

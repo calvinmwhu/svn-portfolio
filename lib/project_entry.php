@@ -8,6 +8,10 @@
 
 include_once 'file_entry.php';
 
+/**
+ * Class ProjectEntry--Defines an assignment directory
+ * Contains an array of all the files and sub-directories under this directory
+ */
 class ProjectEntry {
     public $title, $date, $version, $summary;
     public $files;
@@ -18,11 +22,21 @@ class ProjectEntry {
         $this->files=array();
     }
 
+    /**
+     * @param $file -- a FileEntry object
+     * add this file to the project
+     *
+     */
     public function add_file($file){
         $this->files[$file->name]=$file;
     }
 
+    /**
+     * @param $log_entries -- an array of LogEntry objects
+     */
+    public function add_summary($log_entries){
+        $this->summary=$log_entries[$this->version]->msg;
+    }
 
 }
 
-?>
