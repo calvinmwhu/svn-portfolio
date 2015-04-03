@@ -37,22 +37,27 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <?php
-            $query_string = $_SERVER['QUERY_STRING'];
-            $id = explode('=', $query_string)[1];
-            if(!$id) $id="overview";
-            echo "<h1 class=\"page-header\">$id</h1>";
-            if($id=='overview'){
-                ?>
-                <p class="lead">On this page you can find my svn projects. Please click on any of them in left panel to see a list of files.</p>
-            <?php
-            }else{
-                ?>
-                <h2 class="lead">give summary</h2>
+                $query_string = $_SERVER['QUERY_STRING'];
+                $id = '';
+                if ($query_string)
+                    $id = explode('=', $query_string)[1];
+                if (!$id) $id = "overview";
+                echo "<h1 class=\"page-header\">$id</h1>";
 
-            <?php
-            }
+                if ($id == 'overview') {
+                    echo "<p class=\"lead\">On this page you can find my svn projects. Please click on any of them in left panel to see a list of files.</p>";
+                } else {
+                    echo "<p class=\"lead\">sasasas</p>";
+                    $assignment = $parser->project_lists[$id];
+                    echo $assignment->date;
+                    echo $assignment->version;
+                    echo $assignment->summary;
+
+                }
 
             ?>
+
+
 
 
             <!--            <h1 class="page-header">--><?php //echo $_SERVER['REQUEST_URI']; ?><!--</h1>-->

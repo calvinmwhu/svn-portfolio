@@ -47,13 +47,13 @@ class FileEntry {
      * This function construct an array of all the previous versions for the file or subdirectory
      */
     public function find_all_revisions_for_files($log_entries){
+//        echo "new".'<br>';
         foreach($log_entries as $rev_num=>$log_entry){
-            echo $this->name.'<br>';
-//            if(in_array($log_entry->files, $this->name)){
-//                echo "yes<br>";
-//                $version = new Version($rev_num, $log_entry->author, $log_entry->msg, $log_entry->date);
-//                array_push($this->versions, $version);
-//            }
+            if(in_array($this->name, $log_entry->files)){
+//                echo $this->name.'<br>';
+                $version = new Version($rev_num, $log_entry->author, $log_entry->msg, $log_entry->date);
+                array_push($this->versions, $version);
+            }
         }
     }
 }

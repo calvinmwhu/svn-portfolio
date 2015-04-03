@@ -31,7 +31,7 @@ class Parser
 //            echo "<h1 style=\"color:blue\"> can find file </h1>";
             $this->svn_list = simplexml_load_file($list_path);
             $this->svn_log = simplexml_load_file($log_path);
-            $count = $this->svn_list->children()->children()->count();
+//            $count = $this->svn_list->children()->children()->count();
 //            echo "<h1 style=\"color:blue\"> $count </h1>";
         }
         $this->project_lists = array();
@@ -74,7 +74,7 @@ class Parser
                 if (array_key_exists($belong_project, $this->project_lists)) {
 //                    echo "<h1>$belong_project</h1>";
                     $curr_file = new FileEntry($entry_xml, $this->root_path);
-//                    $curr_file->find_all_revisions_for_files($this->log_entries);
+                    $curr_file->find_all_revisions_for_files($this->log_entries);
                     $this->project_lists[$belong_project]->add_file($curr_file);
                 }
             }
@@ -83,7 +83,6 @@ class Parser
 }
 
 $parser = new Parser;
-echo "end";
 //foreach($parser->log_entries as $key=>$value){
 //    echo $key.'<br><br>';
 //    foreach($value->files as $file){
@@ -91,9 +90,13 @@ echo "end";
 //    }
 //}
 //
-//foreach ($parser->project_lists as $key => $value) {
-//    foreach ($value->files as $name => $file) {
-//        echo count($file->versions) . ':' . $file->name . '<br>';
+//
+//foreach ($parser->project_lists as $key => $project) {
+//    foreach ($project->files as $name => $file) {
+//        $versions=$file->versions;
+//        foreach($versions as $version){
+//            echo $version->number.$version->author.'<br>';
+//        }
 //    }
 //}
 
