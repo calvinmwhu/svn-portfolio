@@ -14,7 +14,12 @@ $config = array(
             'password'=>'newuser',
             'database'=>'test2'
         ),
-        'db_mhu9' => array()
+        'db_mhu9' => array(
+            'hostname'=>'engr-cpanel-mysql.engr.illinois.edu',
+            'username'=>'mhu9_cs242',
+            'password'=>'cs242',
+            'database'=>'mhu9_portfolio'
+        )
     )
 );
 
