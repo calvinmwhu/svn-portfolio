@@ -1,4 +1,4 @@
-setup mysql server:
+setup mysql server(on localhost):
 
 1. Access mysql through MAMP:
      /Applications/MAMP/Library/bin/mysql --host=localhost -uroot -proot
@@ -12,3 +12,21 @@ setup mysql server:
     GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';
 
 
+4. Deployment:
+ website will be hosted on http://web.engr.illinois.edu/~mhu9/
+
+
+//mysql insert comments initially:
+
+insert into comments  values(DEFAULT, NULL, "unknown",NOW(),"let's begin commenting!");
+insert into comments  values(DEFAULT, NULL, "hello", NOW(),"another comment!");
+insert into comments  values(DEFAULT, NULL, "hello2", NOW(),"comment!");
+
+insert into comments  values(DEFAULT, 1, "hello parent 1", NOW(),"comment!");
+insert into comments  values(DEFAULT, 1, "hello parent 1", NOW(),"comment!");
+insert into comments  values(DEFAULT, 2, "hello parent 2", NOW(),"comment!");
+insert into comments  values(DEFAULT, 3, "hello parent 3", NOW(),"comment!");
+
+insert into comments  values(DEFAULT, 4, "hello parent 4", NOW(),"comment!");
+insert into comments  values(DEFAULT, 5, "hello parent 5", NOW(),"comment!");
+insert into comments  values(DEFAULT, 6, "hello parent 6", NOW(),"comment!");
