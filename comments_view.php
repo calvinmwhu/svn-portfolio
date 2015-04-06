@@ -14,14 +14,70 @@
 <body>
 <?php include_once 'lib/header.php'; ?>
 
+<?php
+// define variables and set to empty values
+$name = $comment = "";
+$nameErr = $commentErr = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {  //check if the form has been submitted
+    if (empty($_POST['name'])) {
+        $nameErr = 'Name is required!';
+    } else {
+        $name = test_input($_POST["name"]);
+        if (!preg_match("/^[a-zA-Z ]*$/", $name)) {
+            $nameErr = "Only letters and white space allowed";
+        }
+    }
+    if (empty($_POST['comment'])) {
+        $commentErr = 'Comment is required!';
+    } else {
+        $comment = test_input($_POST["comment"]);
+    }
+}
+function test_input($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
+?>
+
 <div class="container">
     <div class="page-header">
-        <h1>Comments Area</h1>
+        <h1>Comment Area</h1>
     </div>
-    <p class="lead">Leave me a comment if you have any suggestions!</p>
+    <p class="lead">Write your comment here</p>
+    <form role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <div class="form-group required">
+            <label class="control-label" for="name">Name:</label>
+            <input class="form-control" required="required" type="text" name="name" placeholder="your name...">
+        </div>
+        <div class="form-group required">
+            <label class="control-label" for="comment">Comment:</label>
+            <textarea class="form-control" required="required" name="comment" placeholder="your comment..." rows="5"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>
 
 
-<?php include_once 'lib/footer.php'; ?>
+<div class="container" id="comment-container">
+    <br><br>
+    <p class="lead">Previous Comment:</p>
+    <?php
+        require_once 'lib/comments.php';
+        $comments = new Comments;
+        if($name && $comment){
+            $comments->insert_comment(null, $name, $comment);
+        }
+        $comments->fetch_comments();
+        $comments->construct_comment_tree();
+        $comments->finish();
+        display($comments->comments);
+    ?>
+</div>
 
+<?php include_once 'lib/footer.php'; ?>
 </body>

@@ -1,6 +1,8 @@
 <?php
-$xmlDoc = new DOMDocument();
-$xmlDoc->load("svn_list.xml");
+
+$i=null;
+
+echo "hello ".$i;
 
 //$x = $xmlDoc->
 //echo $xmlDoc->saveXML();

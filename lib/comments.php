@@ -39,16 +39,28 @@ class Comments
         $this->comments = array();
     }
 
-    public function populate(){
-        $this->fetch_comments();
-    }
 
-    public function finish(){
-        $this->conn->close();
+    public function insert_comment($parentId, $author, $content){
+        $query="";
+        if($parentId){
+            $query ="INSERT INTO comments VALUES(DEFAULT, '$parentId', '$author', NOW(), '$content')";
+            $exist=$this->conn->query("SELECT * FROM comments WHERE parentId='$parentId' ");
+            if(!$exist->num_rows){
+                echo "parentId $parentId does not exist";
+                return;
+            }
+        }else{
+            $query ="INSERT INTO comments VALUES(DEFAULT, NULL, '$author', NOW(), '$content')";
+
+        }
+        $result = $this->conn->query($query);
+        if(!$result){
+            die($this->conn->error);
+        }
     }
 
     public function fetch_comments(){
-        $query = "SELECT * FROM comments";
+        $query = "SELECT * FROM comments ORDER BY id;";
         $result = $this->conn->query($query);
         if(!$result){
             die($this->conn->error);
@@ -59,18 +71,49 @@ class Comments
             $row = $result->fetch_array(MYSQL_ASSOC);
             $comment = new Comment($row);
             $this->comments[$comment->id]=$comment;
-            echo $comment;
+//            echo $comment;
         }
         $result->close();
     }
 
     public function construct_comment_tree(){
-        
+        foreach($this->comments as $id=>$comment){
+            $parentId = $comment->parentId;
+            if($parentId){
+                $this->comments[$parentId]->children[$id]=$comment;
+            }
+        }
+        foreach($this->comments as $id=>$comment){
+            $parentId = $comment->parentId;
+            if($parentId){
+                unset($this->comments[$id]);
+            }
+        }
     }
 
-
+    public function finish(){
+        $this->conn->close();
+    }
 }
 
-$comments = new Comments;
-$comments->populate();
-$comments->finish();
+function display($comments, $indent=0){
+    $indent_px = $indent.'px';
+    foreach($comments as $id=>$comment){
+        $comment_id = 'comment-'.$id;
+        echo "<div id=\"$comment_id\" class=\"comment-block\" style=\"margin-left: $indent_px\">";
+//        echo "<div></div>"
+        echo "<div><strong>$comment->author</strong>  at <strong>$comment->postDate</strong> said: <br></div>";
+        echo "<div>$comment->content</div>";
+        echo "</div><br>";
+        if(!empty($comment->children)){
+            display($comment->children, $indent+50);
+        }
+//        echo "</div>";
+    }
+}
+//
+//$comments = new Comments;
+//$comments->fetch_comments();
+//$comments->construct_comment_tree();
+//$comments->finish();
+//display($comments->comments);

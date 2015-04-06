@@ -18,15 +18,15 @@ setup mysql server(on localhost):
 
 //mysql insert comments initially:
 
-insert into comments  values(DEFAULT, NULL, "unknown",NOW(),"let's begin commenting!");
-insert into comments  values(DEFAULT, NULL, "hello", NOW(),"another comment!");
-insert into comments  values(DEFAULT, NULL, "hello2", NOW(),"comment!");
+insert into comments  values(DEFAULT, NULL, "a1",NOW(),"comment1");
+insert into comments  values(DEFAULT, NULL, "a2", NOW(),"comment2");
+insert into comments  values(DEFAULT, NULL, "a3", NOW(),"comment3");
 
-insert into comments  values(DEFAULT, 1, "hello parent 1", NOW(),"comment!");
-insert into comments  values(DEFAULT, 1, "hello parent 1", NOW(),"comment!");
-insert into comments  values(DEFAULT, 2, "hello parent 2", NOW(),"comment!");
-insert into comments  values(DEFAULT, 3, "hello parent 3", NOW(),"comment!");
+insert into comments  values(DEFAULT, 1, "a4", NOW(),"comment4");
+insert into comments  values(DEFAULT, 1, "a5", NOW(),"comment5");
+insert into comments  values(DEFAULT, 2, "a6", NOW(),"comment6");
+insert into comments  values(DEFAULT, 3, "a7", NOW(),"comment7");
 
-insert into comments  values(DEFAULT, 4, "hello parent 4", NOW(),"comment!");
-insert into comments  values(DEFAULT, 5, "hello parent 5", NOW(),"comment!");
-insert into comments  values(DEFAULT, 6, "hello parent 6", NOW(),"comment!");
+insert into comments  values(DEFAULT, 4, "a8", NOW(),"comment8");
+insert into comments  values(DEFAULT, 5, "a9", NOW(),"comment9");
+insert into comments  values(DEFAULT, 6, "a10", NOW(),"comment10");

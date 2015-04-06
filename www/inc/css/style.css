@@ -80,3 +80,45 @@ code {
 .pre-commit-title{
     margin-left: 10px;
 }
+
+.error {
+    color: red;
+}
+
+#comment-container{
+    /*position: relative;*/
+}
+
+.comment-block{
+    /*position: absolute;*/
+}
+
+::-webkit-input-placeholder {
+    font-size: 14px;
+    color: #d0cdfa;
+    text-transform: uppercase;
+    font-style: italic;
+}
+:-moz-placeholder { /* older Firefox*/
+    font-size: 14px;
+    color: #d0cdfa;
+    text-transform: uppercase;
+    font-style: italic;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    font-size: 14px;
+    color: #d0cdfa;
+    text-transform: uppercase;
+    font-style: italic;
+}
+:-ms-input-placeholder {
+    font-size: 14px;
+    color: #d0cdfa;
+    text-transform: uppercase;
+    font-style: italic;
+}
+
+.form-group.required .control-label:after {
+    content:"*";
+    color:red;
+}
