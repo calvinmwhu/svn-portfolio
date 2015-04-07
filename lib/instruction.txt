@@ -1,0 +1,34 @@
+
+
+1. Access mysql through MAMP:
+     /Applications/MAMP/Library/bin/mysql --host=localhost -uroot -proot
+
+    //can replace -uroot with any other user
+
+2. create user:
+    CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
+
+3. Grant the user with all priviledge:
+    GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';
+
+
+4. Deployment:
+ website will be hosted on http://web.engr.illinois.edu/~mhu9/
+
+
+
+
+//mysql insert comments initially:
+
+insert into comments  values(DEFAULT, NULL, "a1",NOW(),"comment1");
+insert into comments  values(DEFAULT, NULL, "a2", NOW(),"comment2");
+insert into comments  values(DEFAULT, NULL, "a3", NOW(),"comment3");
+
+insert into comments  values(DEFAULT, 1, "a4", NOW(),"comment4");
+insert into comments  values(DEFAULT, 1, "a5", NOW(),"comment5");
+insert into comments  values(DEFAULT, 2, "a6", NOW(),"comment6");
+insert into comments  values(DEFAULT, 3, "a7", NOW(),"comment7");
+
+insert into comments  values(DEFAULT, 4, "a8", NOW(),"comment8");
+insert into comments  values(DEFAULT, 5, "a9", NOW(),"comment9");
+insert into comments  values(DEFAULT, 6, "a10", NOW(),"comment10");
