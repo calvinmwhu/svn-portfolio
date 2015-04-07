@@ -12,11 +12,14 @@
 
 
 <body>
-<?php include_once 'lib/header.php'; ?>
+<?php include_once 'lib/header.php';
+require_once 'lib/comments.php';
+?>
 
 <?php
 // define variables and set to empty values
 $name = $comment = "";
+$parentId = null;
 $nameErr = $commentErr = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {  //check if the form has been submitted
@@ -33,6 +36,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {  //check if the form has been submit
     } else {
         $comment = test_input($_POST["comment"]);
     }
+    //here we check for parent id:
+    $query_string = $_SERVER['QUERY_STRING'];
+    if ($query_string)
+        $parentId = explode('=', $query_string)[1];
 }
 function test_input($data)
 {
@@ -49,14 +56,16 @@ function test_input($data)
         <h1>Comment Area</h1>
     </div>
     <p class="lead">Write your comment here</p>
-    <form role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+
+    <form id="submit-comment" role="form" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <div class="form-group required">
             <label class="control-label" for="name">Name:</label>
             <input class="form-control" required="required" type="text" name="name" placeholder="your name...">
         </div>
         <div class="form-group required">
             <label class="control-label" for="comment">Comment:</label>
-            <textarea class="form-control" required="required" name="comment" placeholder="your comment..." rows="5"></textarea>
+            <textarea class="form-control" required="required" name="comment" placeholder="your comment..."
+                      rows="5"></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
@@ -67,17 +76,23 @@ function test_input($data)
     <br><br>
     <p class="lead">Previous Comment:</p>
     <?php
-        require_once 'lib/comments.php';
-        $comments = new Comments;
-        if($name && $comment){
-            $comments->insert_comment(null, $name, $comment);
-        }
-        $comments->fetch_comments();
-        $comments->construct_comment_tree();
-        $comments->finish();
-        display($comments->comments);
+    $comments = new Comments;
+    if ($name && $comment) {
+        $comments->insert_comment($parentId, $name, $comment);
+    }
+    $comments->fetch_comments();
+    $comments->construct_comment_tree();
+    $comments->finish();
+    display($comments->comments);
     ?>
 </div>
 
+
+
+
+
 <?php include_once 'lib/footer.php'; ?>
 </body>
+</html>
+
+<script type="text/javascript" src="www/inc/js/script.js"></script>

@@ -21,9 +21,15 @@ class Parser
     function __construct()
     {
         clearstatcache();
-        $root = $_SERVER['DOCUMENT_ROOT'];
-        $list_path = $root . '/svn_list.xml';
-        $log_path = $root . '/svn_log.xml';
+
+        //this looks for xml files in the root, not working so well on cpanel
+//        $root = $_SERVER['DOCUMENT_ROOT'];
+//        $list_path = $root . '/svn_list.xml';
+//        $log_path = $root . '/svn_log.xml';
+
+        $list_path = "svn_list.xml";
+        $log_path = "svn_log.xml";
+
         if (!file_exists($log_path) || !file_exists($list_path)) {
             echo "<h1 style=\"color:red\"> cannot find file </h1>";
             throw new Exception("cannot find resource files");

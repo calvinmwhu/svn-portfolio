@@ -27,7 +27,15 @@ $(document).ready(function () {
 
     });
 
-
+    $(".reply-button").click(function(){
+        var parentId = this.id.split("-")[1];
+        var replyForm_id = "replyForm-"+parentId;
+        var action = $("#submit-comment").attr("action");
+        var action_with_query = action+"?parent_id="+parentId;
+        $("#"+replyForm_id).attr('action',action_with_query);
+        $("#"+replyForm_id).show();
+        //alert(action_with_query);
+    });
 });
 
 

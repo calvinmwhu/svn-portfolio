@@ -62,9 +62,9 @@ class Comments
 
         if($parentId){
             $query ="INSERT INTO comments VALUES(DEFAULT, '$parentId', '$author', NOW(), '$content')";
-            $exist=$this->conn->query("SELECT * FROM comments WHERE parentId='$parentId' ");
+            $exist=$this->conn->query("SELECT * FROM comments WHERE id='$parentId' ");
             if(!$exist->num_rows){
-                echo "parentId $parentId does not exist";
+                echo "Id $parentId does not exist";
                 return;
             }
         }else{
@@ -114,24 +114,39 @@ class Comments
     }
 }
 
-function display($comments, $indent=0){
+function display($comments, $indent=0, $parentName=null){
     $indent_px = $indent.'px';
     foreach($comments as $id=>$comment){
-        $comment_id = 'comment-'.$id;
-        echo "<div id=\"$comment_id\" class=\"comment-block\" style=\"margin-left: $indent_px\">";
-//        echo "<div></div>"
-        echo "<div><strong>$comment->author</strong>  at <strong>$comment->postDate</strong> said: <br></div>";
-        echo "<div>$comment->content</div>";
-        echo "</div><br>";
-        if(!empty($comment->children)){
-            display($comment->children, $indent+50);
+        $replyButton_id = 'replyButton-'.$id;
+        $replyForm_id = 'replyForm-'.$id;
+        echo "<div class=\"comment-block\" style=\"margin-left: $indent_px\">";
+        //insert image here to do...
+        $words = "said:";
+        if($parentName){
+            $words = "replied to ".$parentName.":";
         }
-//        echo "</div>";
+        echo "<div><strong>$comment->author</strong>  at <strong>$comment->postDate</strong> $words <br></div>";
+        echo "<div>$comment->content</div>";
+        echo "<div><button type=\"button\" class=\"reply-button btn-default btn-xs\" id=\"$replyButton_id\">Reply</button></div>";
+
+        //insert html form here for reply
+        echo "<form id=\"$replyForm_id\" role=\"form\" method=\"post\" action=\"\"  style='display: none'>";
+        echo "<div class=\"form-group required\">";
+        echo "<label class=\"control-label\" for=\"name\">Name:</label>";
+        echo "<input class=\"form-control\" required=\"required\" type=\"text\" name=\"name\" placeholder=\"your name...\">";
+        echo "</div>";
+        echo "<div class=\"form-group required\">";
+        echo "<label class=\"control-label\" for=\"comment\">Comment:</label>";
+        echo "<textarea class=\"form-control\" required=\"required\" name=\"comment\" placeholder=\"your comment...\"rows=\"5\"></textarea>";
+        echo "</div>";
+        echo "<button type=\"submit\" class=\"btn btn-primary\">Submit</button>";
+        echo "</form>";
+
+        echo "</div><br>";
+
+        if(!empty($comment->children)){
+            display($comment->children, $indent+50, $comment->author);
+        }
     }
 }
-//
-//$comments = new Comments;
-//$comments->fetch_comments();
-//$comments->construct_comment_tree();
-//$comments->finish();
-//display($comments->comments);
+

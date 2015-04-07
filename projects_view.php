@@ -153,6 +153,6 @@
 
 
 <?php include_once 'lib/footer.php'; ?>
-</body>
+</body></html>
 
 <script type="text/javascript" src="www/inc/js/script.js"></script>
