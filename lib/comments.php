@@ -119,16 +119,21 @@ function display($comments, $indent=0, $parentName=null){
     foreach($comments as $id=>$comment){
         $replyButton_id = 'replyButton-'.$id;
         $replyForm_id = 'replyForm-'.$id;
-        echo "<div class=\"comment-block\" style=\"margin-left: $indent_px\">";
-        //insert image here to do...
         $words = "said:";
         if($parentName){
             $words = "replied to ".$parentName.":";
         }
-        echo "<div><strong>$comment->author</strong>  at <strong>$comment->postDate</strong> $words <br></div>";
-        echo "<div>$comment->content</div>";
-        echo "<div><button type=\"button\" class=\"reply-button btn-default btn-xs\" id=\"$replyButton_id\">Reply</button></div>";
+        echo "<div class=\"container\" style=\"margin-left: $indent_px\">";
 
+        echo "<div class='user-comment-area'>";
+        echo "<div class='profile-image-area'><img class='profile-image' src='www/inc/img/profile.png' alt='profile'/></div>";
+        echo "<div class='comment-content'>";
+        echo "<div><p class='comment-header'><strong>$comment->author</strong>  at <strong>$comment->postDate</strong> $words <br></p></div>";
+        echo "<div><p class='actual-comment'>$comment->content</p></div>";
+        echo "<div><button type=\"button\" class=\"reply-button btn-default btn-xs\" id=\"$replyButton_id\">Reply</button></div>";
+        echo "</div></div>";
+
+        echo "<div class='row'>";
         //insert html form here for reply
         echo "<form id=\"$replyForm_id\" role=\"form\" method=\"post\" action=\"\"  style='display: none'>";
         echo "<div class=\"form-group required\">";
@@ -141,6 +146,7 @@ function display($comments, $indent=0, $parentName=null){
         echo "</div>";
         echo "<button type=\"submit\" class=\"btn btn-primary\">Submit</button>";
         echo "</form>";
+        echo "</div>";
 
         echo "</div><br>";
 

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="www/inc/css/style.css">
+    <link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </head>
@@ -74,7 +75,7 @@ function test_input($data)
 
 <div class="container" id="comment-container">
     <br><br>
-    <p class="lead">Previous Comment:</p>
+    <p class="lead">Previous Comments:</p>
     <?php
     $comments = new Comments;
     if ($name && $comment) {
@@ -86,9 +87,6 @@ function test_input($data)
     display($comments->comments);
     ?>
 </div>
-
-
-
 
 
 <?php include_once 'lib/footer.php'; ?>

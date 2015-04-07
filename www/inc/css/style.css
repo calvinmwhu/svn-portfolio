@@ -85,13 +85,6 @@ code {
     color: red;
 }
 
-#comment-container{
-    /*position: relative;*/
-}
-
-.comment-block{
-    /*position: absolute;*/
-}
 
 ::-webkit-input-placeholder {
     font-size: 14px;
@@ -129,5 +122,33 @@ code {
     font-weight: bold;
 }
 
+.profile-image{
+    max-width: 70px;
+    max-height: 70px;
+    margin-top: -50px;
+}
 
 
+.user-comment-area{
+    position: relative;
+}
+
+.profile-image-area{
+    display: inline-block;
+}
+
+.comment-content{
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.actual-comment{
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+.comment-header{
+    font-style: italic;
+    font-family: sans-serif;
+}
