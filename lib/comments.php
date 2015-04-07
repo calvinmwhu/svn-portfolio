@@ -41,7 +41,25 @@ class Comments
 
 
     public function insert_comment($parentId, $author, $content){
-        $query="";
+        $query="SELECT * FROM filters";
+
+        //use real_escape_string to prevent SQL Injection Attacks and Cross-site Scripting Attacks
+        $parentId = $this->conn->real_escape_string($parentId);
+        $author = $this->conn->real_escape_string($author);
+        $content = $this->conn->real_escape_string($content);
+
+        $result = $this->conn->query($query);
+        if(!$result){
+            die($this->conn->error);
+        }
+        $rows=$result->num_rows;
+        for($i=0; $i<$rows; $i++){
+            $result->data_seek($i);
+            $row = $result->fetch_array(MYSQL_ASSOC);
+            $author = str_ireplace($row['word'], $row['replacement'], $author);
+            $content = str_ireplace($row['word'], $row['replacement'], $content);
+        }
+
         if($parentId){
             $query ="INSERT INTO comments VALUES(DEFAULT, '$parentId', '$author', NOW(), '$content')";
             $exist=$this->conn->query("SELECT * FROM comments WHERE parentId='$parentId' ");

@@ -22,14 +22,23 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <?php
-                $host = 'http://' . $_SERVER['HTTP_HOST'];
-                $path = $_SERVER['PHP_SELF'];
                 $query = '?assignment=';
-                $url = $host . $path . $query . 'overview';
+                //this is the stupid way of constructing the url, but it works:
+//                $host = 'http://' . $_SERVER['HTTP_HOST'];
+//                $path = $_SERVER['PHP_SELF'];
+//                $url = $host . $path . $query . 'overview';
+
+                //this is the clever way of constructing url, but sometimes it doesn't work. Don't know why....
+                $root_path = htmlspecialchars($_SERVER["PHP_SELF"]).$query;
+                $url=$root_path.'overview';
+
+                //the list item for Overview tab
                 echo "<li><a href=\"$url\">Overview <span class=\"sr-only\">(current)</span></a></li>";
 
+                //list items for assignment tabs
                 foreach ($parser->project_lists as $key => $project) {
-                    $url = $host . $path . $query . $project->title;
+                  //  $url = $host . $path . $query . $project->title;
+                    $url = $root_path.$project->title;
                     echo "<li><a href=\"$url\">$project->title</a></li>";
                 }
 

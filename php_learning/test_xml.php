@@ -6,9 +6,13 @@
  * Time: 12:39 AM
  */
 
-$xml=simplexml_load_file("books.xml") or die("Error: Cannot create object");
-$test_string = $xml->book[0]['category'];
-
-if($test_string=='COOKING'){
-    echo $test_string;
+function test_input($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    echo "<h1>$data</h1>";
+    return $data;
 }
+
+echo test_input("<script>location.href('http://www.hacked.com')</script>");
