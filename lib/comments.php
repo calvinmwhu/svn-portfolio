@@ -32,7 +32,7 @@ class Comments
 
     function __construct()
     {
-        require_once 'config.php';
+        require 'config.php';
         $this->conn = new mysqli($config['db']['db_localhost']['hostname'], $config['db']['db_localhost']['username'], $config['db']['db_localhost']['password'], $config['db']['db_localhost']['database']);
         //$this->conn = new mysqli($config['db']['db_mhu9']['hostname'], $config['db']['db_mhu9']['username'], $config['db']['db_mhu9']['password'],$config['db']['db_mhu9']['database']);
         if ($this->conn->connect_error) die($this->conn->connect_error);
